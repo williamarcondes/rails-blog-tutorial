@@ -1,29 +1,31 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Posts</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @posts.each do |post| %>
+<div class="row">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= post.title %></td>
-        <td><%= post.content %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th></th>
+        <th scope="col">Actions</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td class="col-sm-4"><%= post.title %></td>
+          <td class="col-sm-6"><%= post.content %></td>
+          <td><%= button_to 'Show', post, method: :get, class: 'btn btn-secondary btn-sm' %></td>
+          <td><%= button_to 'Edit', edit_post_path(post), method: :get, class: 'btn btn-primary btn-sm' %></td>
+          <td><%= button_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <br>
 
-<%= link_to 'New Post', new_post_path %>
+<%= button_to 'New Post', new_post_path, class: 'btn btn-primary', method: :get %>
