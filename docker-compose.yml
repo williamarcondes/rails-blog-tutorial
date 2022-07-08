@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+    networks:
+      - web-net
+  web:
+    build:
+      context: .
+      args:
+        - USER_NAME=${USER:-root}
+        - USER_ID=${USER_ID:-1000}
+    command: bash -c "rm -f tmp/pids/server.pid && rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/projeto
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    networks:
+      - web-net
+
+networks:
+  web-net:
+    name: web-net
